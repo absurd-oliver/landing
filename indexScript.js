@@ -14,8 +14,7 @@ function start() {
  			clearInterval(timer);
 			spin.classList.remove("hidden");
 			bodyContainer.classList.add("hidden");
-			window.location.href = 'pages/landing/landing.html';
-			
+			window.location.href = '/landingPageProject/pages/landing/landing.html';
 		}
 	}, 1000);
 }
