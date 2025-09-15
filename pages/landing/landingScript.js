@@ -20,7 +20,7 @@ function backToIndex(){
 	landingText.classList.add("hidden");
 	landingTextBg.classList.add("hidden");
 	setTimeout(() => {
-		window.location.href = '../../index.html';
+		window.location.href = "../../index.html";
 	}, 1000);
 }
 
