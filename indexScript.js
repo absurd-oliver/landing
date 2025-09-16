@@ -14,7 +14,7 @@ function start() {
  			clearInterval(timer);
 			spin.classList.remove("hidden");
 			bodyContainer.classList.add("hidden");
-			window.location.href = "https://absurd-oliver.github.io/landingPageProject/pages/landing/landing.html";
+			window.location.href = "absurd-oliver.github.io/landingPageProject/pages/landing/landing.html";
 		}
 	}, 1000);
 }
