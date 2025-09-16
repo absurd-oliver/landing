@@ -54,4 +54,5 @@ body {
 #redirectToTLMP {
 	z-index: 0;
 	width: 15vw;
+	border-color: #010101;
 }
