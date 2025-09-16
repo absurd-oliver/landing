@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search Pages</title>
+    <style>
+      body{
+    background-color: #e6e6e6;
+}
+
+#bodyContainer {
+    text-align: center;
+}
+    
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 5px solid #ccc;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+    text-align: center;
+    margin-top: 50vh;
+}
+    
+.hidden {
+    display: none;
+}
+    
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#predictionBox {
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  background-color: white;
+  z-index: 100;
+  position: absolute;
+  width: calc(100% - 2px);
+}
+
+#predictionBox ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#predictionBox li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+#predictionBox li:hover {
+  background-color: #f0f0f0;
+}
+    </style>
+  </head>
+  <body>
+    <div id="bodyContainer">
+    <div id="outputContainer">
+      <p id="output">type in the textbox</p>
+    </div>
+    <input type="text" placeholder="type here" id="inputField">
+    <div id="predictionBox"></div>
+    </div>
+    <div id="spinner" class='spinner hidden'><p>.</p></div>
+    <script defer>
+      const inputField = document.getElementById("inputField");
+const output = document.getElementById("output");
+const predictionBox = document.getElementById("predictionBox");
+const spinner = document.getElementById("spinner");
+const bodyContainer = document.getElementById("bodyContainer");
+
+const pages = ['landing', 'TLMP', 'sudoku solver'];
+
+// --- Utility function for debouncing ---
+function debounce(func, delay = 300) {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
+// --- Prediction function ---
+function predict() {
+  const text = inputField.value.toLowerCase().trim();
+
+  if (text === '') {
+    predictionBox.innerHTML = '';
+    return;
+  }
+
+  const filteredPages = pages.filter(page => page.toLowerCase().startsWith(text));
+
+  displayPredictions(filteredPages);
+}
+
+// --- Display predictions in the DOM ---
+function displayPredictions(predictions) {
+  predictionBox.innerHTML = '';
+
+  if (predictions.length > 0) {
+    const ul = document.createElement('ul');
+    predictions.forEach(prediction => {
+      const li = document.createElement('li');
+      li.textContent = prediction;
+      li.addEventListener('click', () => {
+        inputField.value = prediction;
+        predictionBox.innerHTML = '';
+        redirect('https://absurd-oliver.github.io/' + prediction.replace(/ /g, '-'));
+      });
+      ul.appendChild(li);
+    });
+    predictionBox.appendChild(ul);
+  }
+}
+
+// --- Event Listeners ---
+const debouncedPredict = debounce(predict, 300);
+
+inputField.addEventListener("input", () => {
+  output.textContent = inputField.value;
+  debouncedPredict();
+
+  if (inputField.value === '') {
+    output.textContent = "type in the textbox";
+  }
+
+  if (pages.includes(inputField.value)) {
+    redirect(inputField.value.replace(/ /g, '-') + '.html');
+  }
+});
+
+// Close prediction box when clicking outside
+document.addEventListener('click', (event) => {
+  if (!predictionBox.contains(event.target) && event.target !== inputField) {
+    predictionBox.innerHTML = '';
+  }
+});
+
+function redirect(location) {
+  bodyContainer.classList.add("hidden");
+  spinner.classList.remove("hidden");
+  setTimeout(() => {
+    window.location.href = location;
+  }, 1000);
+}
+    </script>
+  </body>
+</html>
