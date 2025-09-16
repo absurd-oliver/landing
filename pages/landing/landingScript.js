@@ -24,6 +24,16 @@ function backToIndex(){
 	}, 1000);
 }
 
+function goToSearch(){
+	spin.classList.remove("hidden");
+	bodyContainer.classList.add("hidden");
+	landingText.classList.add("hidden");
+	redirectButtonsContainer.classList.add("hidden");
+	setTimeout(() => {
+		window.location.href = "../../search.html";
+	}, 1000);
+}
+
 function redirect(where){
 	spin.classList.remove("hidden");
 	bodyContainer.classList.add("hidden");
