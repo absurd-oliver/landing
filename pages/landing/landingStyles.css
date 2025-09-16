@@ -60,3 +60,8 @@ body {
 	padding: 10px;
 	background-color: #ccc;
 }
+
+#redirectToTLMP {
+	z-index: 0;
+	width: 15vw;
+}
