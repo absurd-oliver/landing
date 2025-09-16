@@ -138,9 +138,7 @@ inputField.addEventListener("input", () => {
     output.textContent = "type in the textbox";
   }
   
-  if (inputField.value === 'landing'){
-    redirect('https://absurd-oliver.github.io/landing/');
-  } else if (pages.includes(inputField.value)) {
+ if (pages.includes(inputField.value)) {
     redirect(inputField.value.replace(/ /g, '-') + '.html');
   }
 });
